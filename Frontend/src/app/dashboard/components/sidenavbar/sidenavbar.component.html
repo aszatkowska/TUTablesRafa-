@@ -1,0 +1,54 @@
+<mat-sidenav-container>
+    <mat-sidenav #sidenav mode="side" opened="true">
+        <mat-nav-list>
+
+            <mat-list-item (click)="isExpanded = !isExpanded">
+                <mat-icon mat-list-icon class="">menu</mat-icon>
+            </mat-list-item>
+
+            <mat-list-item [routerLink]="''">
+                <mat-icon mat-list-icon>home</mat-icon>
+                <span *ngIf = isExpanded class="menu-text">Home</span>
+            </mat-list-item>
+
+            <mat-list-item [routerLink]="'custmers'">
+                <mat-icon mat-list-icon>perm_identity</mat-icon>
+                <span *ngIf = isExpanded class="menu-text">Customers</span>
+            </mat-list-item>
+
+            <mat-list-item [routerLink]="'suppliers'">
+                <mat-icon mat-list-icon>store</mat-icon>
+                <span *ngIf = isExpanded class="menu-text">Suppliers</span>
+            </mat-list-item>
+
+            <mat-list-item [routerLink]="'shippers'">
+                <mat-icon mat-list-icon>commute</mat-icon>
+                <span *ngIf = isExpanded class="menu-text">Shippers</span>
+            </mat-list-item>
+
+            <mat-list-item [routerLink]="'products'">
+                <mat-icon mat-list-icon>shopping_cart</mat-icon>
+                <span *ngIf = isExpanded class="menu-text">Products</span>
+            </mat-list-item>
+
+            <mat-list-item [routerLink]="'orders'">
+                <mat-icon mat-list-icon>shopping_basket</mat-icon>
+                <span *ngIf = isExpanded class="menu-text">Orders</span>
+            </mat-list-item>
+
+        </mat-nav-list>
+    </mat-sidenav>
+
+    <div class="content">
+        <mat-toolbar>
+            <h4>
+                Junior2Medium
+            </h4>
+        </mat-toolbar>
+        <div class="content-body">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+    
+</mat-sidenav-container>
+

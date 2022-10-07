@@ -1,0 +1,15 @@
+mat-sidenav-container{
+    height: 100%;
+}
+
+.menu-text {
+    padding-top: 0.25rem;
+}
+
+.content{
+    width: 100%;
+}
+
+.content-body{
+    padding: 2%;
+}
