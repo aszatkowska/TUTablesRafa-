@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Order } from 'src/models/order.model';
 import { PagedResult } from 'src/models/pagedresult.model';
 import { MatSort, Sort } from '@angular/material/sort';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-orders',
@@ -12,6 +13,7 @@ import { MatSort, Sort } from '@angular/material/sort';
 export class OrdersComponent implements OnInit {
 
   sort: Sort = new MatSort();
+  pageEvent: PageEvent = new PageEvent();
   title = 'Lista zamówień';
   dataSource: Order[];
   displayedColumns =['customerName', 'shipperCompanyName'];
@@ -19,6 +21,8 @@ export class OrdersComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
+    this.pageEvent.pageIndex = 0;
+    this.pageEvent.pageSize = 5;
     this.sort.direction = 'desc';
     this.sort.active = 'customerName';
     this.loadData();
@@ -30,10 +34,19 @@ export class OrdersComponent implements OnInit {
   }
 
   loadData(){
-    this.http.get<PagedResult<Order>>('https://localhost:7000/api/Order?SortProperty=' + this.sort.active + this.getDirection(this.sort.direction))
+    this.http.get<PagedResult<Order>>(
+      'https://localhost:7000/api/order?', {
+        params: {
+          PageNumber: this.pageEvent.pageIndex + 1,
+          PageSize: this.pageEvent.pageSize,
+          SortProperty: this.sort.active,
+          Desc: this.getDirection(this.sort.direction)
+      }
+    })
     .subscribe(
       (response: PagedResult<Order>) => {
         console.log(response);
+        this.pageEvent.length = response.totalRecords;
         this.dataSource = response.data;
       },
     error => {
@@ -41,13 +54,17 @@ export class OrdersComponent implements OnInit {
     });
   }
 
+  public handlePage(e: any) {
+    this.pageEvent.pageIndex = e.pageIndex;
+    this.pageEvent.pageSize = e.pageSize;
+    this.loadData();
+  }
+
   getDirection(dir: String) {
-    if (dir === 'asc') {
-      return '&Desc=' + false;
-    } else if (dir  === 'desc') {
-      return '&Desc=' + true;
-    } else {
-      return '';
+    if (dir === 'desc') {
+      return 'true';
+    } else{
+      return 'false';
     }
   }
 }
