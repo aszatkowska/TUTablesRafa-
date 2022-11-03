@@ -16,6 +16,7 @@ export class OrdersComponent implements OnInit {
   pageEvent: PageEvent = new PageEvent();
   title = 'Lista zamówień';
   dataSource: Order[];
+  pageSizeOptions: number[];
   displayedColumns =['customerName', 'shipperCompanyName'];
 
   constructor(private http: HttpClient) { }
@@ -23,6 +24,7 @@ export class OrdersComponent implements OnInit {
   ngOnInit(): void {
     this.pageEvent.pageIndex = 0;
     this.pageEvent.pageSize = 5;
+    this.pageSizeOptions = [5, 10, 20];
     this.sort.direction = 'desc';
     this.sort.active = 'customerName';
     this.loadData();

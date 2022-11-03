@@ -16,6 +16,7 @@ export class ProductsComponent implements OnInit {
   pageEvent: PageEvent = new PageEvent();
   title='Lista produktów'
   dataSource: Product[];
+  pageSizeOptions: number[];
   displayedColumns =['name', 'price', 'supplierName']
 
   constructor(private http: HttpClient) { }
@@ -23,6 +24,7 @@ export class ProductsComponent implements OnInit {
   ngOnInit(): void {
     this.pageEvent.pageIndex = 0;
     this.pageEvent.pageSize = 5;
+    this.pageSizeOptions = [5, 10, 20];
     this.sort.direction = 'asc';
     this.sort.active = 'name';
     this.loadData();

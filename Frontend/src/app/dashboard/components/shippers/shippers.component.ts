@@ -16,6 +16,7 @@ export class ShippersComponent implements OnInit {
   pageEvent: PageEvent = new PageEvent();
   title = 'Lista przewoźników'
   dataSource: Shipper[];
+  pageSizeOptions: number[];
   displayedColumns =['companyName', 'phone'];
 
   constructor(private http: HttpClient) { }
@@ -23,6 +24,7 @@ export class ShippersComponent implements OnInit {
   ngOnInit(): void {
     this.pageEvent.pageIndex = 0;
     this.pageEvent.pageSize = 5;
+    this.pageSizeOptions = [5, 10, 20];
     this.sort.direction = 'asc';
     this.sort.active = 'companyName';
     this.loadData();
